@@ -1,15 +1,16 @@
 import { useState } from 'react'
-import Comp1 from '@/components/index.tsx'
-import Comp2 from '@/components2/index.tsx'
+import { useRoutes, Link } from 'react-router-dom';
+import routes from '@/router/Index.tsx'
+
 function App() {
   const [count, setCount] = useState(0)
-
+  const outlet = useRoutes(routes)
   return (
     <>
-    <div>
-      顶级组件
-      <Comp1 />
-      <Comp2 />
+      <div className='App'>
+        <Link to="/home">Home</Link>|
+        <Link to="/about">About</Link>
+        {outlet}
       </div>
     </>
   )

@@ -8,9 +8,13 @@ import "reset-css"
 import '@/assets/styles/global.scss'
 // import component css
 import App from './App.tsx'
+import { BrowserRouter } from 'react-router-dom'
+// import Router from './router/Index.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <BrowserRouter>
     <App />
-  </React.StrictMode>,
+    </BrowserRouter>
+  </React.StrictMode>
 )
