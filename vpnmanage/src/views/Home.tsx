@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
   DesktopOutlined,
   FileOutlined,
@@ -8,6 +9,8 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Outlet, useNavigate} from 'react-router-dom';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -44,15 +47,23 @@ const View: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const NavigateTo = useNavigate();
+
+  const menuClick = (e: {key: string}) => {
+    console.log("点击了菜单", e.key)
+    NavigateTo(e.key);
+  }
+
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {/* left sidebar */}
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+        <div className="logo" />
+        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={menuClick}/>
       </Sider>
-      <Layout>
+      {/* right content */}
+      <Layout className='site-layout'>
         {/* right content */}
         <Header style={{ padding: 0, background: colorBgContainer }}>
           {/* breacCrumbs */}
@@ -61,18 +72,10 @@ const View: React.FC = () => {
             <Breadcrumb.Item>Bill</Breadcrumb.Item>
           </Breadcrumb>
         </Header>
-        <Content style={{ margin: '16px 0' }}>
-          
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            Bill is a cat.
-          </div>
+            
+        <Content style={{ margin: '16px 16px 0' }} className="site-layout-background">
+            {/* content windows */}
+            <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center', padding:'0', lineHeight:'48px'}}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
