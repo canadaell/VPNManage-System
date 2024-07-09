@@ -3,6 +3,7 @@ import Home from "@/views/Home"
 // import About from "@/views/About"
 import  {Navigate}  from "react-router-dom"
 import React, { Children, lazy } from "react";
+import path from "path";
 const Wallet = lazy(() => import('@/views/Wallet'))
 const Nodes = lazy(() => import('@/views/Nodes'))
 const Store = lazy(() => import('@/views/Store'))
@@ -27,7 +28,7 @@ const routes = [
       element: <Navigate to="/home" />
     },
     {
-      path: '/',
+      path: '/home',
       element: <Home />,
       children: [
         {
@@ -47,9 +48,9 @@ const routes = [
           element: withLoadingComponent(<Account />)
         },
         {
-          path: 'invite', // Correct the path
+          path: 'invite', 
           element: withLoadingComponent(<Invite />)
-        }
+        },
       ]
     }
   ];
