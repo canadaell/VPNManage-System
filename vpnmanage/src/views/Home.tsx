@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
+  ApiOutlined,
   UserOutlined,
+  HomeOutlined,
+  MoneyCollectOutlined,
+  ShopOutlined,
+  WalletOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
@@ -31,15 +32,14 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('首页', '1', <PieChartOutlined />),
-  getItem('商店', '2', <DesktopOutlined />),
+  getItem('首页', 'home', <HomeOutlined />),
+  getItem('商店', 'Store', <ShopOutlined />),
   getItem('用户', 'sub1', <UserOutlined />, [
-    getItem('我的账号', '3'),
-    getItem('我的钱包', '4'),
-    getItem('邀请注册', '5'),
+    getItem('我的账号', 'account', <UserOutlined />),
+    getItem('我的钱包', 'wallet', <WalletOutlined />),
+    getItem('邀请注册', 'invite',<MoneyCollectOutlined />),
   ]),
-  getItem('节点列表', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('我的钱包', '9', <FileOutlined />),
+  getItem('节点列表', 'nodes', <ApiOutlined />, )
 ];
 
 const View: React.FC = () => {
@@ -50,7 +50,7 @@ const View: React.FC = () => {
   const NavigateTo = useNavigate();
 
   const menuClick = (e: {key: string}) => {
-    console.log("点击了菜单", e.key)
+    console.log("menu clicked", e.key)
     NavigateTo(e.key);
   }
 
@@ -60,7 +60,7 @@ const View: React.FC = () => {
       {/* left sidebar */}
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={menuClick}/>
+        <Menu theme="dark" defaultSelectedKeys={['home']} mode="inline" items={items} onClick={menuClick}/>
       </Sider>
       {/* right content */}
       <Layout className='site-layout'>
