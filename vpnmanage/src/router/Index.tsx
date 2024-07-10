@@ -2,14 +2,14 @@
 import Home from "@/views/Home"
 // import About from "@/views/About"
 import  {Navigate}  from "react-router-dom"
-import React, { Children, lazy } from "react";
-import { Layout } from "antd";
+import React, { lazy } from "react";
 const Wallet = lazy(() => import('@/views/Wallet'))
 const Nodes = lazy(() => import('@/views/Nodes'))
 const Store = lazy(() => import('@/views/Store'))
 const Account = lazy(() => import('@/views/Account'))
 const Invite = lazy(() => import('@/views/Invite'))
 const Layouts = lazy(() => import('@/views/Layouts'))
+import Login from "@/views/Login"
 
 const lazyLoading = (comp:JSX.Element) => (
     <React.Suspense fallback={<div>Loading...</div>}>
@@ -57,6 +57,15 @@ const routes = [
           element: withLoadingComponent(<Invite />)
         },
       ]
+    },
+      {
+        path: '/login',
+        element: <Login />
+      },
+    //access other routes
+    {
+      path: '*',
+      element: <Navigate to="/home" />
     }
   ];
 

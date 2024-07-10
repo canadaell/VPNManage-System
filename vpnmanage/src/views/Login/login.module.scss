@@ -1,0 +1,33 @@
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+  }
+  
+  .loginForm {
+    width: 300px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .loginLogo {
+    margin-bottom: 20px;
+  
+    img {
+      width: 50px;
+    }
+  }
+  
+  .loginFormButton {
+    width: 100%;
+  }
+  
+  .loginFormForgot {
+    float: right;
+  }
+  

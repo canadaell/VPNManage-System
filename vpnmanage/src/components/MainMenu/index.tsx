@@ -9,7 +9,7 @@ import {
   } from '@ant-design/icons';
 import React, { useState } from "react";
 import { Menu, theme } from 'antd';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -39,20 +39,32 @@ const items: MenuItem[] = [
   ];
 
   const Comp: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [openKeys, setOpenKeys] = useState(['']);
     const NavigateTo = useNavigate();
+    const currentLocation = useLocation();
+    //console.log("current location", currentLocation.pathname)
   
     const menuClick = (e: {key: string}) => {
-      console.log("menu clicked", e.key)
+      //console.log("menu clicked", e.key)
       NavigateTo(e.key);
+    }
+
+    //let 
+
+    //open and close menu
+    const handleOpenChange = (keys: string[]) => {
+      //console.log(keys)
+      setOpenKeys([keys[keys.length - 1]])
     }
 
     return (
         <Menu 
         theme="dark" 
-        defaultSelectedKeys={['home']} 
+        defaultSelectedKeys={[]} 
         mode="inline" items={items} 
         onClick={menuClick}
+        onOpenChange={handleOpenChange}
+        openKeys={openKeys}
         />
     )
   }
