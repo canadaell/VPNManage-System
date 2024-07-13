@@ -1,11 +1,10 @@
 import { legacy_createStore} from "redux";
 import reducer from "@/store/reducer";
-import exp from "constants";
-
 
 
 //create a store
-const store = legacy_createStore(reducer);
+//let browser use redux-dev-tools
+const store = legacy_createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store;
 

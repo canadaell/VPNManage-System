@@ -9,4 +9,4 @@ let reducer = (state = defaultState) => {
 
 }
 
-export default reducer;
+export default reducer

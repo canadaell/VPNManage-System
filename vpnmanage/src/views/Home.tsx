@@ -1,16 +1,19 @@
 //hook function
-import { useSelector } from 'react-redux'
+import { Button } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const Home = () => {
-const {num} = useSelector((state) => ({
-  num: state.num
-}))
+
+//get data from store
+const {num} = useSelector((state) => 
+({num:state.num}))
 
   return (
     <div>
       home component
       <p>{num}</p>
+      <Button onClick={changeNum}>change number</Button>
     </div>
   )
 }

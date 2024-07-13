@@ -1,11 +1,35 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, KeyOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
+import { ChangeEvent, useState } from 'react';
 
 const View = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
+//get user input 
+const [userNameVal, setUserNameVal] = useState("")
+const [passwordVal, setPasswordVal] = useState("")
+const [captchaVal, setCaptchaVal] = useState("")
+const userNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
+    setUserNameVal(e.target.value)
+}
+const passwordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
+    setPasswordVal(e.target.value)
+}
+const captchaChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
+    setCaptchaVal(e.target.value)
+}
+
+//login event
+const goLogin = () => {
+    console.log(userNameVal, passwordVal, captchaVal)
+}
+
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
@@ -23,7 +47,9 @@ const View = () => {
           >
             <Input prefix={<UserOutlined className="site-form-item-icon" />} 
             placeholder="邮箱" 
-            size='large'/>
+            size='large'
+            onChange={userNameChange}
+            />
           </Form.Item>
           <Form.Item
             name="password"
@@ -34,6 +60,7 @@ const View = () => {
                 placeholder="密码"
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 size='large'
+                onChange={passwordChange}
             />
           </Form.Item>
           <Form.Item name="captchaBox" rules={[{required: true, message:"请输入验证码"}]} >
@@ -43,6 +70,7 @@ const View = () => {
                 prefix={<KeyOutlined className="site-form-item-icon" />}
                 placeholder="验证码"
                 size='large'
+                onChange={captchaChange}
               />
               <img
                 src= ""
@@ -70,7 +98,12 @@ const View = () => {
             </a>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
+            <Button 
+            type="primary" 
+            htmlType="submit" 
+            className={styles.loginFormButton}
+            onClick={goLogin}
+            >
               登录
             </Button>
           </Form.Item>
