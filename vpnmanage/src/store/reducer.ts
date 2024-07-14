@@ -1,12 +1,14 @@
-const defaultState = {
-    num:20
-}
 
-let reducer = (state = defaultState) => {
-    let newState = JSON.parse(JSON.stringify(state))
+import { AppState } from '@/store/types';
 
-    return newState
+const defaultState: AppState = {
+  num: 20,
+};
 
-}
+const reducer = (state = defaultState): AppState => {
+  let newState = JSON.parse(JSON.stringify(state));
 
-export default reducer
+  return newState;
+};
+
+export default reducer;
