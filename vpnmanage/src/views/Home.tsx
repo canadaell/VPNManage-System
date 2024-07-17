@@ -10,10 +10,15 @@ const Home = () => {
 const { num } = useSelector((state: AppState) => ({ num: state.num }));
 const dispatch = useDispatch();
 //change number by useDispatch
+//dispatch can active reducer
 const changeNum = () => {
+  // dispatch({
+  //   type: 'add1',
+  //   num: 1,
+  // });
   dispatch({
-    type: 'add',
-    num: 10,
+    type: 'add2',
+    val: 10,
   });
 }
 
