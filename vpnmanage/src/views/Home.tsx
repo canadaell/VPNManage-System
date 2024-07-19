@@ -1,34 +1,25 @@
-//hook function
-import { Button } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '@/store/types';
+import { Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import store from '@/store';
 
+type RootState = ReturnType<typeof store.getState>;
 
 const Home = () => {
 
-//get data from store
-const { num } = useSelector((state: AppState) => ({ num: state.num }));
-const dispatch = useDispatch();
-//change number by useDispatch
-//dispatch can active reducer
-const changeNum = () => {
-  // dispatch({
-  //   type: 'add1',
-  //   num: 1,
-  // });
-  dispatch({
-    type: 'add2',
-    val: 10,
-  });
-}
+  const dispatch = useDispatch();
 
-return (
-  <div>
-    home component
-    <p>{num}</p>
-    <Button onClick={changeNum}>change number</Button>
-  </div>
-);
+  const changeNum = () => {
+    dispatch({
+      type: 'add2',
+      val: 10,
+    });
+  };
+
+  return (
+    <div>
+      home component
+    </div>
+  );
 };
 
-export default Home
+export default Home;
