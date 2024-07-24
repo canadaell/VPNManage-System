@@ -9,7 +9,9 @@ const Store = lazy(() => import('@/views/Store'))
 const Account = lazy(() => import('@/views/Account'))
 const Invite = lazy(() => import('@/views/Invite'))
 const Layouts = lazy(() => import('@/views/Layouts'))
-import Login from "@/views/Login"
+const Login = lazy(() => import('@/views/Login'))
+const Register = lazy(() => import('@/views/Register'))
+import path from "path";
 
 const lazyLoading = (comp:JSX.Element) => (
     <React.Suspense fallback={<div>Loading...</div>}>
@@ -25,11 +27,7 @@ const withLoadingComponent = (comp:JSX.Element) => (
 
 const routes = [
     {
-      path: '/',
-      element: <Layouts />
-    },
-    {
-      path: '/',
+      path: '/layout',
       element: <Layouts />,
       children: [
         {
@@ -62,10 +60,14 @@ const routes = [
         path: '/login',
         element: <Login />
       },
+      {
+        path: '/register',
+        element: withLoadingComponent(<Register />)
+      },
     //access other routes
     {
       path: '*',
-      element: <Navigate to="/home" />
+      element: <Navigate to="/layout/home" />
     }
   ];
 

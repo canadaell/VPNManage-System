@@ -7,7 +7,7 @@ import {
     ShopOutlined,
     WalletOutlined,
   } from '@ant-design/icons';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, theme } from 'antd';
 import { useNavigate, useLocation} from 'react-router-dom';
 
@@ -30,11 +30,9 @@ function getItem(
 const items: MenuItem[] = [
     getItem('首页', 'home', <HomeOutlined />),
     getItem('商店', 'Store', <ShopOutlined />),
-    getItem('用户', 'sub1', <UserOutlined />, [
-      getItem('我的账号', 'account', <UserOutlined />),
-      getItem('我的钱包', 'wallet', <WalletOutlined />),
-      getItem('邀请注册', 'invite',<MoneyCollectOutlined />),
-    ]),
+    getItem('我的账号', 'account', <UserOutlined />),
+    getItem('我的钱包', 'wallet', <WalletOutlined />),
+    getItem('邀请注册', 'invite',<MoneyCollectOutlined />),
     getItem('节点列表', 'nodes', <ApiOutlined />, )
   ];
 
@@ -43,6 +41,7 @@ const items: MenuItem[] = [
     const NavigateTo = useNavigate();
     const currentLocation = useLocation();
     //console.log("current location", currentLocation.pathname)
+
   
     const menuClick = (e: {key: string}) => {
       //console.log("menu clicked", e.key)
@@ -59,8 +58,8 @@ const items: MenuItem[] = [
 
     return (
         <Menu 
-        theme="dark" 
-        defaultSelectedKeys={[]} 
+        theme="dark"
+        defaultSelectedKeys={[currentLocation.pathname]} //current selected keys
         mode="inline" items={items} 
         onClick={menuClick}
         onOpenChange={handleOpenChange}
