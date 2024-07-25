@@ -2,6 +2,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, KeyOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
 import { ChangeEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const View = () => {
   const onFinish = (values: any) => {
@@ -108,7 +109,10 @@ const goLogin = () => {
             </Button>
           </Form.Item>
           <Form.Item>
-            还没有账号? <a href="">马上注册</a>
+            还没有账号? 
+            <Link to = "/register">
+            <a href="">马上注册</a>
+            </Link>
           </Form.Item>
         </Form>
       </div>
