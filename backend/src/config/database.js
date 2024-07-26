@@ -46,4 +46,4 @@ async function findUserById(id) {
     }
 }
 
-module.exports = {pool, testConnection, findAllUsers, findUserById};
+module.exports = {pool, testConnection, findAllUsers, findUserById, execute: pool.execute.bind(pool)};
