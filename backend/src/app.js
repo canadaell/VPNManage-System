@@ -5,6 +5,7 @@ const userRoutes = require('./api/users');
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 
+require('dotenv').config();
 const app = createServer();
 
 // test database connection

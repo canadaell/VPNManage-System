@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const pool = require('../config/database');
 const jwt = require('jsonwebtoken');
-
-
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+//register
 router.post('/register', async (req, res) => {
   const { email, password, confirmPassword } = req.body;
 
@@ -40,6 +40,23 @@ router.post('/register', async (req, res) => {
   }
 });
 
+
+function generateToken(user) {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET is not defined');
+  }
+  try {
+    return jwt.sign(
+      { userId: user.id, email: user.email },
+      secret,
+      { expiresIn: '1h' }
+    );
+  } catch (error) {
+    console.error('Token generation error:', error);
+    throw error;
+  }
+}
 //login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -65,20 +82,13 @@ router.post('/login', async (req, res) => {
     }
 
     // build JWT token
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET, // 你需要设置这个环境变量
-      { expiresIn: '1h' } // token 将在1小时后过期
-    );
+    const token = generateToken(user);
 
     res.json({
       message: '登录成功',
-      token: token,
-      user: {
-        id: user.id,
-        email: user.email
-        // 你可以在这里添加其他你想返回的用户信息
-      }
+      token,
+      userId: user.id,
+      expiresIn: 3600 // Token expires in 1 hour
     });
 
   } catch (error) {
