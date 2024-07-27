@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const pool = require('../config/database');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 console.log('JWT_SECRET:', process.env.JWT_SECRET);
 //register
 router.post('/register', async (req, res) => {
