@@ -5,7 +5,7 @@ import  {Navigate}  from "react-router-dom"
 import React, { lazy } from "react";
 const Wallet = lazy(() => import('@/views/Wallet'))
 const Nodes = lazy(() => import('@/views/Nodes'))
-const Store = lazy(() => import('@/views/Store'))
+const Store = lazy(() => import('@/views/Store/Store'))
 const Account = lazy(() => import('@/views/Account'))
 const Invite = lazy(() => import('@/views/Invite'))
 const Layouts = lazy(() => import('@/views/Layouts'))

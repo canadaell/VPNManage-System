@@ -1,0 +1,77 @@
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .pricing-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+  
+    .card-header {
+      background-color: #6c7ae0;
+      color: white;
+      padding: 10px;
+      border-radius: 8px 8px 0 0;
+      text-align: center;
+    }
+  
+    .card-price {
+      text-align: center;
+      margin: 20px 0;
+  
+      h2 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+    }
+  
+    .features {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+  
+      li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+  
+        .checkmark {
+          color: #4caf50;
+          margin-right: 10px;
+        }
+      }
+    }
+  
+    .cta-button {
+      background-color: #6c7ae0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .pricing-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .pricing-card {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+  }
