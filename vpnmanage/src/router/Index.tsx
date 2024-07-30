@@ -3,11 +3,9 @@ import Home from "@/views/Home"
 // import About from "@/views/About"
 import  {Navigate}  from "react-router-dom"
 import React, { lazy } from "react";
-const Wallet = lazy(() => import('@/views/Wallet'))
-const Nodes = lazy(() => import('@/views/Nodes'))
+const Nodes = lazy(() => import('@/views/Node/Nodes'))
 const Store = lazy(() => import('@/views/Store/Store'))
 const Account = lazy(() => import('@/views/Account'))
-const Invite = lazy(() => import('@/views/Invite'))
 const Layouts = lazy(() => import('@/views/Layouts'))
 const Login = lazy(() => import('@/views/Login'))
 const Register = lazy(() => import('@/views/Register'))
@@ -35,10 +33,6 @@ const routes = [
           element: withLoadingComponent(<Home />)
         },
         {
-          path: 'wallet',
-          element: withLoadingComponent(<Wallet />)
-        },
-        {
           path: 'nodes',
           element: withLoadingComponent(<Nodes />)
         },
@@ -49,10 +43,6 @@ const routes = [
         {
           path: 'account',
           element: withLoadingComponent(<Account />)
-        },
-        {
-          path: 'invite', 
-          element: withLoadingComponent(<Invite />)
         },
       ]
     },

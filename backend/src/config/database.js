@@ -46,4 +46,14 @@ async function findUserById(id) {
     }
 }
 
-module.exports = {pool, testConnection, findAllUsers, findUserById, execute: pool.execute.bind(pool)};
+async function findSubscription() {
+    try {
+        const [rows] = await pool.query('SELECT * FROM subscription_plans' );
+        return rows;
+    } catch (error) {
+        console.error('Error querying subscriptions:', error);
+        throw error;
+    }
+}
+
+module.exports = {pool, testConnection, findAllUsers, findUserById, execute: pool.execute.bind(pool), findSubscription};

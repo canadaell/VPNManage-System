@@ -3,9 +3,7 @@ import {
     ApiOutlined,
     UserOutlined,
     HomeOutlined,
-    MoneyCollectOutlined,
     ShopOutlined,
-    WalletOutlined,
   } from '@ant-design/icons';
 import React, { useEffect, useState } from "react";
 import { Menu, theme } from 'antd';
@@ -31,8 +29,6 @@ const items: MenuItem[] = [
     getItem('首页', 'home', <HomeOutlined />),
     getItem('商店', 'Store', <ShopOutlined />),
     getItem('我的账号', 'account', <UserOutlined />),
-    getItem('我的钱包', 'wallet', <WalletOutlined />),
-    getItem('邀请注册', 'invite',<MoneyCollectOutlined />),
     getItem('节点列表', 'nodes', <ApiOutlined />, )
   ];
 

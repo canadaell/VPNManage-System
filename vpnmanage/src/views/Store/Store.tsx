@@ -59,10 +59,15 @@ const PricingCards: React.FC = () => {
   ];
 
   return (
-    <div className="pricing-container">
-      <PricingCard name="Standard" price={1} features={blueCardFeatures} />
-      <PricingCard name="Premium" price={2} features={whiteCardFeatures} />
-    </div>
+    <>
+      <div className='pricing-title'>
+        <h1>Subscribing plans</h1>
+      </div>
+      <div className="pricing-container">
+        <PricingCard name="Standard" price={1} features={blueCardFeatures} />
+        <PricingCard name="Premium" price={2} features={whiteCardFeatures} />
+      </div>
+    </>
   );
 };
 
