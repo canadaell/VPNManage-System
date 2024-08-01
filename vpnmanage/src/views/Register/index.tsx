@@ -29,7 +29,7 @@ const View = () => {
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
         <div className={styles.loginLogo}>
-          <img src="path_to_logo" alt="Logo" />
+          <img src="../public/ACELink.png" alt="Logo" />
         </div>
         <Form
           form={form}

@@ -28,22 +28,30 @@ const View = () => {
         email: values.email,
         password: values.password
       });
+  
       console.log('Login response:', response.data);
-      message.success('登录成功！');
-      // if login success, store token in localStorage
-      // localStorage.setItem('token', response.data.token);
-      navigate('/layout/home'); // redirect to home
+  
+      if (response.data.token) {
+        // 登录成功
+        localStorage.setItem('token', response.data.token);
+        message.success('登录成功！');
+        navigate('/layout/home');
+      } else {
+        // 没有token，视为登录失败
+        message.error(response.data.message || '登录失败');
+      }
     } catch (error) {
       console.error('Login failed:', error);
       message.error('登录失败，请检查您的邮箱和密码。');
     }
   };
+  
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
         <div className={styles.loginLogo}>
-          <img src="path_to_logo" alt="Logo" />
+          <img src="../public/ACELink.png" alt="Logo" />
         </div>
         <Form
           form={form}
