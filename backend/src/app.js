@@ -3,8 +3,10 @@ const { testConnection } = require('./config/database');
 const authRoutes = require('./api/auth');
 const userRoutes = require('./api/users');
 const subscriptionRoutes = require('./api/subscriptions');
+const buyPlanRoutes = require('./api/buyplan');
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
+
 
 
 require('dotenv').config();
@@ -30,6 +32,7 @@ app.use('/api/subscriptions', subscriptionRoutes);
 console.log('Subscription routes mounted');
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/buyplan', buyPlanRoutes);
 // get subscription plans
 
 
