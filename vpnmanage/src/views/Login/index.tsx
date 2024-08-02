@@ -34,6 +34,8 @@ const View = () => {
       if (response.data.token) {
         // 登录成功
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userEmail', values.email);
+        localStorage.setItem('user_id', response.data.userId);
         message.success('登录成功！');
         navigate('/layout/home');
       } else {
