@@ -16,9 +16,11 @@ interface PricingCardProps {
   name: string;
   price: number;
   features: Feature[];
+  planId: number;
+  onBuy: (planId: number) => void;
 }
 
-const PricingCard: React.FC<PricingCardProps> = ({ name, price, features }) => (
+const PricingCard: React.FC<PricingCardProps> = ({ name, price, features, planId, onBuy }) => (
   <div className="pricing-card">
     <div className="card-header">
       <h3>{name}</h3>
@@ -34,7 +36,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ name, price, features }) => (
         </li>
       ))}
     </ul>
-    <button className="cta-button">next step →</button>
+    <button className="cta-button" onClick={() => onBuy(planId)}>next step →</button>
   </div>
 );
 
@@ -53,6 +55,26 @@ const PricingCards: React.FC = () => {
 
     fetchSubscriptions();
   }, []);
+
+  const handleBuy = async (planId: number) => {
+    const userId = localStorage.getItem('user_id');
+    if (!userId) {
+      alert('Please log in to purchase a plan.');
+      return;
+    }
+    try {
+      const response = await axios.post('http://localhost:3001/api/buyplan', {
+        user_id: parseInt(userId),
+        plan_id: planId
+      });
+      
+      console.log('Purchase successful:', response.data);
+      alert('Purchase successful!');
+    } catch (error) {
+      console.error('Error purchasing plan:', error);
+      alert('Failed to purchase plan. Please try again.');
+    }
+  }
 
   const featuresList: { [key: string]: Feature[] } = {
     "Standard": [
@@ -93,6 +115,8 @@ const PricingCards: React.FC = () => {
             name={subscription.name}
             price={parseFloat(subscription.price)}
             features={featuresList[subscription.name] || []}
+            planId={subscription.id}
+            onBuy={handleBuy}
           />
         ))}
       </div>

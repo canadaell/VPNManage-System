@@ -14,19 +14,25 @@ router.post('/', async (req, res) => {
     // get start date and end date
     const start_date = new Date();
     const end_date = new Date(start_date.getTime() + 30 * 24 * 60 * 60 * 1000);
-
+    //delete old subscription
+    await database.execute(
+      'DELETE FROM User_Subscriptions WHERE user_id = ?',
+      [user_id]
+    ); 
     // insert new subscription
     const [result] = await database.execute(
       'INSERT INTO User_Subscriptions (user_id, plan_id, start_date, end_date) VALUES (?, ?, ?, ?)',
       [user_id, plan_id, start_date, end_date]
     );
 
+    
+
     // return success message
     res.status(201).json({
       message: '订阅成功',
       subscription_id: result.insertId,
-      start_date: start_date,
-      end_date: end_date
+      start_date: start_date.toISOString(),
+      end_date: end_date.toISOString()
     });
 
   } catch (error) {

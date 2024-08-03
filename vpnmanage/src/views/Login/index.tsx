@@ -1,7 +1,7 @@
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -47,7 +47,6 @@ const View = () => {
       message.error('登录失败，请检查您的邮箱和密码。');
     }
   };
-  
 
   return (
     <div className={styles.loginContainer}>
