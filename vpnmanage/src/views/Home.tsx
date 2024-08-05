@@ -51,7 +51,7 @@ const View = () => {
               <p>Subscription end date: {new Date(subscriptionData!.end_date).toLocaleDateString()}</p>
             </>
           ) : (
-            <p>Loading subscription data...</p>
+            <p>Subscription not purchased</p>
           )}
         </Card>
       </Col>
