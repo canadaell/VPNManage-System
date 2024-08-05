@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
@@ -18,6 +19,7 @@ const View = () => {
   }
 
   const passwordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    
     console.log(e.target.value)
     setPasswordVal(e.target.value)
   }
@@ -32,14 +34,14 @@ const View = () => {
       console.log('Login response:', response.data);
   
       if (response.data.token) {
-        // 登录成功
+        // login success
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userEmail', values.email);
         localStorage.setItem('user_id', response.data.userId);
         message.success('登录成功！');
         navigate('/layout/home');
       } else {
-        // 没有token，视为登录失败
+        // login failed without token
         message.error(response.data.message || '登录失败');
       }
     } catch (error) {
