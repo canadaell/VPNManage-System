@@ -5,8 +5,8 @@ import {
     HomeOutlined,
     ShopOutlined,
   } from '@ant-design/icons';
-import React, { useEffect, useState } from "react";
-import { Menu, theme } from 'antd';
+import React, { useState } from "react";
+import { Menu } from 'antd';
 import { useNavigate, useLocation} from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];

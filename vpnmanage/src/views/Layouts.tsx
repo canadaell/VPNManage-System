@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, theme} from 'antd';
-import { Outlet, useNavigate} from 'react-router-dom';
+import { Outlet} from 'react-router-dom';
 import MainMenu from '@/components/MainMenu';
 import Logout from '@/components/Logout';
 
@@ -11,7 +11,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const View: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
 
 

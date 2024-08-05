@@ -12,7 +12,6 @@ import { BrowserRouter } from 'react-router-dom'
 // import Router from './router/Index.tsx'
 
 //manage state
-import { Provider } from 'react-redux'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

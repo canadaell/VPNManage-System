@@ -1,7 +1,6 @@
 import { Button, Radio, Form, Input, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

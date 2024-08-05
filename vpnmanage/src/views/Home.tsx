@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Row, Col } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
