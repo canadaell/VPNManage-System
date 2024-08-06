@@ -26,10 +26,10 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('首页', 'home', <HomeOutlined />),
-    getItem('商店', 'Store', <ShopOutlined />),
-    getItem('我的账号', 'account', <UserOutlined />),
-    getItem('节点列表', 'nodes', <ApiOutlined />, )
+    getItem('home', 'home', <HomeOutlined />),
+    getItem('store', 'Store', <ShopOutlined />),
+    getItem('account', 'account', <UserOutlined />),
+    getItem('nodes', 'nodes', <ApiOutlined />, )
   ];
 
   const Comp: React.FC = () => {

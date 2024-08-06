@@ -38,15 +38,15 @@ const View = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userEmail', values.email);
         localStorage.setItem('user_id', response.data.userId);
-        message.success('登录成功！');
+        message.success('login success!');
         navigate('/layout/home');
       } else {
         // login failed without token
-        message.error(response.data.message || '登录失败');
+        message.error(response.data.message || 'login failed');
       }
     } catch (error) {
       console.error('Login failed:', error);
-      message.error('登录失败，请检查您的邮箱和密码。');
+      message.error('login failed, please try again');
     }
   };
 
@@ -65,24 +65,24 @@ const View = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: '请输入邮箱!' },
-              { type: 'email', message: '请输入有效的邮箱地址!' }
+              { required: true, message: 'enter your email' },
+              { type: 'email', message: 'please enter a valid email!' }
             ]}
           >
             <Input 
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="邮箱"
+              placeholder="email"
               size='large'
               onChange={userNameChange}
             />
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: '请输入密码!' }]}
+            rules={[{ required: true, message: 'enter password!' }]}
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              placeholder="密码"
+              placeholder="password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               size='large'
               onChange={passwordChange}
@@ -90,7 +90,7 @@ const View = () => {
           </Form.Item>
           <Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>记住我</Checkbox>
+              <Checkbox>remember me</Checkbox>
             </Form.Item>
           </Form.Item>
           <Form.Item>
@@ -99,13 +99,13 @@ const View = () => {
               htmlType="submit"
               className={styles.loginFormButton}
             >
-              登录
+              login
             </Button>
           </Form.Item>
           <Form.Item>
-            还没有账号? 
+            don't have account? 
             <Link to="/register">
-              马上注册
+              register now!
             </Link>
           </Form.Item>
         </Form>

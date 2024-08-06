@@ -20,7 +20,7 @@ const Logout: React.FC = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userEmail');
         // logout success message
-        message.success('登出成功');
+        message.success('logout success');
         
         // navigate to login page  
         navigate('/login');

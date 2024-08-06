@@ -16,11 +16,11 @@ const View = () => {
         confirmPassword: values.passwordConfirm
       });
       console.log(response.data);
-      message.success('注册成功！');
+      message.success('register successful!');
       navigate('/login'); // Redirect to login page after successful registration
     } catch (error) {
       console.error('Registration failed:', error);
-      message.error('注册失败，请重试。');
+      message.error('register failed, please try again');
     }
   };
 
@@ -39,26 +39,26 @@ const View = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: '请输入邮箱' },
-              { type: 'email', message: '请输入有效的邮箱地址' }
+              { required: true, message: 'enter email' },
+              { type: 'email', message: 'please enter a valid email' }
             ]}
           >
             <Input 
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="邮箱"
+              placeholder="email"
               size='large'
             />
           </Form.Item>
           <Form.Item
             name="password"
             rules={[
-              { required: true, message: '请输入密码' },
-              { min: 6, message: '密码长度不能少于6个字符' }
+              { required: true, message: 'enter password' },
+              { min: 6, message: 'password can not less than 6 words' }
             ]}
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              placeholder="密码"
+              placeholder="password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               size='large'
             />
@@ -67,20 +67,20 @@ const View = () => {
             name="passwordConfirm"
             dependencies={['password']}
             rules={[
-              { required: true, message: '请再次确认密码' },
+              { required: true, message: 'confirm password' },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('两次输入的密码不一致'));
+                  return Promise.reject(new Error('two passwords do not match'));
                 },
               }),
             ]}
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              placeholder="确认密码"
+              placeholder="confirm"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               size='large'
             />
@@ -92,7 +92,7 @@ const View = () => {
               { validator: (_, value) => value ? Promise.resolve() : Promise.reject(new Error('请同意服务条款')) },
             ]}
           >
-            <Radio>注册即代表同意服务条款</Radio>
+            <Radio>Registration means you agree to the terms of service</Radio>
           </Form.Item>
           <Form.Item>
             <Button
@@ -100,13 +100,13 @@ const View = () => {
               htmlType="submit"
               className={styles.loginFormButton}
             >
-              注册
+              login
             </Button>
           </Form.Item>
           <Form.Item>
-            已经有账号？ 
+            already have account? 
             <Link to="/login">
-              马上登录
+              login now!
             </Link>
           </Form.Item>
         </Form>
