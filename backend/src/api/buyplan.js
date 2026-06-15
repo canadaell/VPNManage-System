@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const database = require('../config/database'); 
+const {
+  parseBuyPlanRequest,
+  buildBuyPlanResponse
+} = require('../contracts/paymentContracts');
 
 router.post('/', async (req, res) => {
   try {
-    const { user_id, plan_id } = req.body;
+    const request = parseBuyPlanRequest(req.body);
 
     // verify user_id and plan_id
-    if (!user_id || !plan_id) {
-      return res.status(400).json({ error: '缺少必要的参数' });
+    if (!request.ok) {
+      return res.status(400).json({ error: request.error.message });
     }
+
+    const { user_id, plan_id } = request.value;
 
     // get start date and end date
     const start_date = new Date();
@@ -28,12 +34,7 @@ router.post('/', async (req, res) => {
     
 
     // return success message
-    res.status(201).json({
-      message: '订阅成功',
-      subscription_id: result.insertId,
-      start_date: start_date.toISOString(),
-      end_date: end_date.toISOString()
-    });
+    res.status(201).json(buildBuyPlanResponse(result.insertId, start_date, end_date));
 
   } catch (error) {
     console.error('Error:', error);
