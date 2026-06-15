@@ -1,32 +1,28 @@
-// @ts-nocheck
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, LockOutlined, UserOutlined } from '@ant-design/icons';
 import styles from '@/views/Login/login.module.scss';
-import { ChangeEvent, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+  remember?: boolean;
+}
+
+interface LoginResponse {
+  message?: string;
+  token?: string;
+  userId: number | string;
+}
 
 const View = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  const [userNameVal, setUserNameVal] = useState("")
-  const [passwordVal, setPasswordVal] = useState("")
-
-  const userNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
-    setUserNameVal(e.target.value)
-  }
-
-  const passwordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    
-    console.log(e.target.value)
-    setPasswordVal(e.target.value)
-  }
-
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: LoginFormValues) => {
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/login', {
+      const response = await axios.post<LoginResponse>('http://localhost:3001/api/auth/login', {
         email: values.email,
         password: values.password
       });
@@ -37,7 +33,7 @@ const View = () => {
         // login success
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userEmail', values.email);
-        localStorage.setItem('user_id', response.data.userId);
+        localStorage.setItem('user_id', String(response.data.userId));
         message.success('login success!');
         navigate('/layout/home');
       } else {
@@ -73,7 +69,6 @@ const View = () => {
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="email"
               size='large'
-              onChange={userNameChange}
             />
           </Form.Item>
           <Form.Item
@@ -85,7 +80,6 @@ const View = () => {
               placeholder="password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               size='large'
-              onChange={passwordChange}
             />
           </Form.Item>
           <Form.Item>

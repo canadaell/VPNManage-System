@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './store.scss';
+import {
+  PAYMENT_API_ENDPOINTS,
+  PLAN_DURATION_DAYS,
+  createBuyPlanRequest,
+  subscriptionPriceToNumber,
+} from '@/contracts/payment';
+import type { BuyPlanResponse, SubscriptionPlan } from '@/contracts/payment';
 
 interface Feature {
   text: string;
-}
-
-interface Subscription {
-  id: number;
-  name: string;
-  price: string;
 }
 
 interface PricingCardProps {
@@ -27,7 +28,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ name, price, features, planId
     </div>
     <div className="card-price">
       <h2>€{price}</h2>
-      <p>30 days</p>
+      <p>{PLAN_DURATION_DAYS} days</p>
     </div>
     <ul className="features">
       {features.map((feature, index) => (
@@ -41,12 +42,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ name, price, features, planId
 );
 
 const PricingCards: React.FC = () => {
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionPlan[]>([]);
 
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/subscriptions');
+        const response = await axios.get<SubscriptionPlan[]>(PAYMENT_API_ENDPOINTS.subscriptions);
         setSubscriptions(response.data);
       } catch (error) {
         console.error('Error fetching subscriptions:', error);
@@ -58,15 +59,15 @@ const PricingCards: React.FC = () => {
 
   const handleBuy = async (planId: number) => {
     const userId = localStorage.getItem('user_id');
-    if (!userId) {
+    const request = createBuyPlanRequest(userId, planId);
+
+    if (!request) {
       alert('Please log in to purchase a plan.');
       return;
     }
+
     try {
-      const response = await axios.post('http://localhost:3001/api/buyplan', {
-        user_id: parseInt(userId),
-        plan_id: planId
-      });
+      const response = await axios.post<BuyPlanResponse>(PAYMENT_API_ENDPOINTS.buyPlan, request);
       
       console.log('Purchase successful:', response.data);
       alert('Purchase successful!');
@@ -113,7 +114,7 @@ const PricingCards: React.FC = () => {
           <PricingCard
             key={subscription.id}
             name={subscription.name}
-            price={parseFloat(subscription.price)}
+            price={subscriptionPriceToNumber(subscription.price)}
             features={featuresList[subscription.name] || []}
             planId={subscription.id}
             onBuy={handleBuy}
