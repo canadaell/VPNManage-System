@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react';
 import { Alert, Card, Row, Col } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
-import { getPaymentStatusNote } from '@/utils/paymentStatus';
+import { getPaymentStatusNote, normalizePaymentStatus, type PaymentStatus } from '@/utils/paymentStatus';
 
 interface SubscriptionData {
   start_date: string;
   end_date: string;
 }
 
+interface SubscriptionResponse {
+  payment_status?: PaymentStatus;
+  subscriptions?: SubscriptionData[];
+}
+
 const View = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [subscriptionData, setSubscriptionData] = useState<SubscriptionData | null>(null);
-  const [isPaymentStatusUnavailable, setIsPaymentStatusUnavailable] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('unavailable');
   const [isPaymentStatusResolved, setIsPaymentStatusResolved] = useState(false);
 
   const cardStyle = {
@@ -36,17 +41,17 @@ const View = () => {
 
       if (!userId) {
         setSubscriptionData(null);
-        setIsPaymentStatusUnavailable(true);
+        setPaymentStatus('unavailable');
         setIsPaymentStatusResolved(true);
         return;
       }
 
       try {
-        const response = await axios.get(`http://localhost:3001/api/displaydate?user_id=${userId}`);
+        const response = await axios.get<SubscriptionResponse>(`http://localhost:3001/api/displaydate?user_id=${userId}`);
 
         if (isCurrentRequest) {
-          setSubscriptionData(response.data.subscriptions[0]);
-          setIsPaymentStatusUnavailable(false);
+          setSubscriptionData(response.data.subscriptions?.[0] ?? null);
+          setPaymentStatus(normalizePaymentStatus(response.data.payment_status));
         }
       } catch (error) {
         if (!isCurrentRequest) {
@@ -56,9 +61,10 @@ const View = () => {
         setSubscriptionData(null);
 
         if (axios.isAxiosError(error) && error.response?.status === 404) {
-          setIsPaymentStatusUnavailable(false);
+          const responseData = error.response.data as SubscriptionResponse | undefined;
+          setPaymentStatus(normalizePaymentStatus(responseData?.payment_status));
         } else {
-          setIsPaymentStatusUnavailable(true);
+          setPaymentStatus('unavailable');
           console.error('Error fetching subscription data:', error);
         }
       } finally {
@@ -75,11 +81,7 @@ const View = () => {
     };
   }, [userId]);
 
-  const paymentStatusNote = getPaymentStatusNote({
-    hasUserId: Boolean(userId),
-    hasSubscription: Boolean(subscriptionData),
-    isUnavailable: isPaymentStatusUnavailable,
-  });
+  const paymentStatusNote = getPaymentStatusNote(paymentStatus);
 
   return (
     <Row gutter={isMobile ? [0, 16] : [16, 16]}>
