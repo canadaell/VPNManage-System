@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "node --check src/app.js && node --check src/api/buyplan.js && node --check src/contracts/billingContract.js && node --check test/billingContract.test.js",
+    "typecheck": "npm run lint",
+    "test": "node test/billingContract.test.js",
     "start": "node -r dotenv/config src/server.js",
     "dev": "nodemon src/server.js"
   },

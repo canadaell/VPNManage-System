@@ -4,11 +4,18 @@ import styles from '@/views/Login/login.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+interface RegisterFormValues {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  agreement?: boolean;
+}
+
 const View = () => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<RegisterFormValues>();
   const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: RegisterFormValues) => {
     try {
       const response = await axios.post('http://localhost:3001/api/auth/register', {
         email: values.email,
