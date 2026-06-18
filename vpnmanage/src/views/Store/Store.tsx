@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  BILLING_API_PATHS,
+  buildBillingApiUrl,
+  buildPurchasePlanRequest,
+  parsePlanPrice,
+  type PurchasePlanResponse,
+  type SubscriptionPlan
+} from '@/contracts/billing';
 import './store.scss';
 
 interface Feature {
   text: string;
-}
-
-interface Subscription {
-  id: number;
-  name: string;
-  price: string;
 }
 
 interface PricingCardProps {
@@ -17,7 +19,7 @@ interface PricingCardProps {
   price: number;
   features: Feature[];
   planId: number;
-  onBuy: (planId: number) => void;
+  onBuy: React.Dispatch<number>;
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({ name, price, features, planId, onBuy }) => (
@@ -41,12 +43,14 @@ const PricingCard: React.FC<PricingCardProps> = ({ name, price, features, planId
 );
 
 const PricingCards: React.FC = () => {
-  const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionPlan[]>([]);
 
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/subscriptions');
+        const response = await axios.get<SubscriptionPlan[]>(
+          buildBillingApiUrl(BILLING_API_PATHS.subscriptions)
+        );
         setSubscriptions(response.data);
       } catch (error) {
         console.error('Error fetching subscriptions:', error);
@@ -63,10 +67,10 @@ const PricingCards: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:3001/api/buyplan', {
-        user_id: parseInt(userId),
-        plan_id: planId
-      });
+      const response = await axios.post<PurchasePlanResponse>(
+        buildBillingApiUrl(BILLING_API_PATHS.buyPlan),
+        buildPurchasePlanRequest(userId, planId)
+      );
       
       console.log('Purchase successful:', response.data);
       alert('Purchase successful!');
@@ -113,7 +117,7 @@ const PricingCards: React.FC = () => {
           <PricingCard
             key={subscription.id}
             name={subscription.name}
-            price={parseFloat(subscription.price)}
+            price={parsePlanPrice(subscription.price)}
             features={featuresList[subscription.name] || []}
             planId={subscription.id}
             onBuy={handleBuy}

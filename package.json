@@ -1,0 +1,9 @@
+{
+  "name": "vpnmanage-system",
+  "private": true,
+  "scripts": {
+    "lint": "npm --prefix backend run lint && npm --prefix vpnmanage run lint",
+    "typecheck": "npm --prefix backend run typecheck && npm --prefix vpnmanage run typecheck",
+    "test": "npm --prefix backend run test && npm --prefix vpnmanage run typecheck"
+  }
+}

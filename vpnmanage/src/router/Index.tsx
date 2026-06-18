@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 // routes.tsx
 import React, { lazy } from "react";
 import { Navigate } from "react-router-dom";
