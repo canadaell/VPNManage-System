@@ -7,12 +7,6 @@ export interface PaymentStatusNote {
   alertType: 'success' | 'warning' | 'error';
 }
 
-interface PaymentStatusInput {
-  hasUserId: boolean;
-  hasSubscription: boolean;
-  isUnavailable: boolean;
-}
-
 const paymentStatusNotes: Record<PaymentStatus, PaymentStatusNote> = {
   configured: {
     status: 'configured',
@@ -34,18 +28,14 @@ const paymentStatusNotes: Record<PaymentStatus, PaymentStatusNote> = {
   },
 };
 
-export function getPaymentStatusNote({
-  hasUserId,
-  hasSubscription,
-  isUnavailable,
-}: PaymentStatusInput): PaymentStatusNote {
-  if (!hasUserId || isUnavailable) {
-    return paymentStatusNotes.unavailable;
+export function normalizePaymentStatus(status: unknown): PaymentStatus {
+  if (status === 'configured' || status === 'pending' || status === 'unavailable') {
+    return status;
   }
 
-  if (hasSubscription) {
-    return paymentStatusNotes.configured;
-  }
+  return 'unavailable';
+}
 
-  return paymentStatusNotes.pending;
+export function getPaymentStatusNote(status: PaymentStatus): PaymentStatusNote {
+  return paymentStatusNotes[status];
 }
